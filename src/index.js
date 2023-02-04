@@ -48,11 +48,15 @@ async function onSearchSubmit(evt) {
       clearMarkup();
       return;
     }
-
+    
     renderMarkup(res.data.hits);
     Notify.success(`Hooray! We found ${totalPage} images.`);
     refreshSimpleLightBox();
     loadMoreBtn.style.display = 'inline-block';
+    if (res.data.hits.length < 40) {
+      onCollectionEnd();
+    }
+    
   } catch (error) {
     console.log(error);
     Notify.failure('Something went wrong!');
@@ -138,7 +142,10 @@ function refreshSimpleLightBox() {
 }
 
 function onCollectionEnd() {
-  Notify.info("We're sorry, but you've reached the end of search results.");
+  Notify.info("We're sorry, but you've reached the end of search results.", {
+    showOnlyTheLastOne: true,
+    cssAnimationDuration: 1000,
+  });
   loadMoreBtn.style.display = 'none';
 }
 
