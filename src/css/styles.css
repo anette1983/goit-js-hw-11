@@ -43,7 +43,7 @@ header {
   top: 0;
   z-index: 1;
   background-color: #254a67bf;
-  
+  box-shadow: rgba(136, 157, 168, 0.8) 0 3px 8px -3px;
 }
 
 main {
@@ -63,7 +63,6 @@ input {
   margin-right: 10px;
 }
 
-
 button {
   text-transform: uppercase;
   border: 0;
@@ -80,13 +79,10 @@ button {
 
 button:hover,
 button:focus {
- background-color: #188CE8;
+  background-color: #188ce8;
 }
 
-
-
 /*  */
-
 
 .gallery {
   /* display: grid;
@@ -121,13 +117,13 @@ button:focus {
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
 }
 
-@media screen and (min-width: 768px){
+@media screen and (min-width: 768px) {
   .gallery__item {
     flex-basis: calc((100% - 30px) / 2);
   }
 }
 
-@media screen and (min-width: 1200px){
+@media screen and (min-width: 1200px) {
   .gallery__item {
     flex-basis: calc((100% - 60px) / 3);
   }
@@ -144,13 +140,11 @@ button:focus {
   transition: transform var(--animation-duration) var(--timing-function);
 }
 
-
 .info-item {
   display: flex;
   flex-direction: column;
   margin-right: 5px;
   align-items: center;
-
 }
 
 .search-form {
