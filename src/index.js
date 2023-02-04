@@ -143,7 +143,7 @@ function onCollectionEnd() {
 }
 
 function onScroll() {
-  const { height: cardHeight } = document
+  const { height: cardHeight} = document
     .querySelector('.gallery')
     .firstElementChild.getBoundingClientRect();
 
