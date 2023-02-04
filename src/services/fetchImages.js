@@ -27,6 +27,9 @@ function incrementPage() {
   page += 1;
 }
 
+function resetPage() {
+  page = 1;
+}
 
 //${BASE_URL}?key=${API_KEY}&q=yellow+flowers&image_type=photo&orientation=horizontal&safesearch=true
 
@@ -59,6 +62,6 @@ function incrementPage() {
   
 
 
-export { fetchImages, page, perPage, incrementPage };
+export { fetchImages, page, perPage, incrementPage, resetPage };
 
 

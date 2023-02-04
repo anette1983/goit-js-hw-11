@@ -1,13 +1,15 @@
 import {
   fetchImages,
   page,
-  perPage,
   incrementPage,
+  resetPage,
 } from './services/fetchImages';
 import './css/styles.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import InfiniteScroll from 'infinite-scroll';
+
 
 const searchForm = document.querySelector('#search-form');
 const gallery = document.querySelector('.gallery');
@@ -31,13 +33,14 @@ async function onSearchSubmit(evt) {
     return Notify.failure('Please, fill the search field');
   }
   try {
-    page = 1;
+    // page = 1;
+    resetPage();
     const res = await fetchImages(searchQuery);
     // console.log(res);
     // console.log(res.data);
     // console.log(res.data.hits);
     // console.log(res.data.totalHits);
-    let totalPage = res.data.totalHits;
+    const totalPage = res.data.totalHits;
     if (totalPage === 0) {
       Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
@@ -49,9 +52,10 @@ async function onSearchSubmit(evt) {
     renderMarkup(res.data.hits);
     Notify.success(`Hooray! We found ${totalPage} images.`);
     refreshSimpleLightBox();
-    loadMoreBtn.style.display = 'block';
+    loadMoreBtn.style.display = 'inline-block';
   } catch (error) {
     console.log(error);
+    Notify.failure('Something went wrong!');
   }
 }
 
@@ -64,7 +68,13 @@ async function onLoadMoreClick() {
     console.log(res.data.hits);
     renderMarkup(res.data.hits);
     refreshSimpleLightBox();
-    loadMoreBtn.style.display = 'block';
+    loadMoreBtn.style.display = 'inline-block';
+    // let infiniteScroll = new InfiniteScroll( gallery, {
+
+    //   path: '.pagination__next',
+    //   append: '.post',
+    //   history: false,
+    // });
     // const count = res.data.totalHits / perPage;
     // console.log(count);
     if (res.data.hits.length === 0) {
@@ -73,6 +83,7 @@ async function onLoadMoreClick() {
     }
   } catch (error) {
     console.log(error);
+    Notify.failure('Something went wrong!');
   }
 }
 
@@ -91,22 +102,14 @@ function renderMarkup(images) {
         downloads,
       } = image;
 
-      return `<a href="${largeImageURL}">
+      return `<a class="gallery__item" href="${largeImageURL}">
         <div class="photo-card">
-        <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+        <img class="gallery__image" src="${webformatURL}" alt="${tags}" loading="lazy" />
         <div class="info">
-          <p class="info-item">
-            <b>${likes}</b>
-          </p>
-          <p class="info-item">
-            <b>${views}</b>
-          </p>
-          <p class="info-item">
-            <b>${comments}</b>
-          </p>
-          <p class="info-item">
-            <b>${downloads}</b>
-          </p>
+          <p class="info-item"><b>Likes</b>${likes}</p>
+          <p class="info-item"><b>Views</b>${views}</p>
+          <p class="info-item"><b>Comments</b>${comments}</p>
+          <p class="info-item"><b>Downloads</b>${downloads}</p>
         </div>
       </div>
     </a>`;
@@ -140,3 +143,5 @@ function refreshSimpleLightBox() {
 //   top: cardHeight * 2,
 //   behavior: "smooth",
 // });
+
+
